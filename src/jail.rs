@@ -172,14 +172,14 @@ impl Jail {
     ///     Ok(())
     /// });
     /// ```
-    pub fn create_directory<P: AsRef<Path>>(&self, path: P) -> Result<Path> {
+    pub fn create_directory<P: AsRef<Path>>(&self, path: P) -> Result<&Path> {
         let path = path.as_ref();
         if !path.is_relative() {
             return Err("Jail::create_file(): file path is absolute".to_string().into());
         }
         fs::create_dir(self.directory().join(path)).map_err(as_string)?;
 
-        Ok(*path)
+        Ok(path)
     }
 
     /// Remove all environment variables. All variables will be restored when
